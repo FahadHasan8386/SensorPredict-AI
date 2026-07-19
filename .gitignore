@@ -1,0 +1,74 @@
+# ==========================
+# Python
+# ==========================
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Compiled Python files
+*.so
+*.pyd
+*.pyo
+
+# ==========================
+# Virtual Environment
+# ==========================
+
+venv/
+.venv/
+env/
+ENV/
+
+# ==========================
+# VS Code
+# ==========================
+
+.vscode/
+
+# ==========================
+# Jupyter Notebook
+# ==========================
+
+.ipynb_checkpoints/
+
+# ==========================
+# Pytest
+# ==========================
+
+.pytest_cache/
+
+# ==========================
+# Distribution / Packaging
+# ==========================
+
+build/
+dist/
+*.egg-info/
+
+# ==========================
+# Model Files (Optional)
+# Uncomment if you don't want to upload trained models
+# ==========================
+
+# model/*.pkl
+
+# ==========================
+# Logs
+# ==========================
+
+*.log
+
+# ==========================
+# Environment Variables
+# ==========================
+
+.env
+
+# ==========================
+# Operating System Files
+# ==========================
+
+.DS_Store
+Thumbs.db
+desktop.ini
