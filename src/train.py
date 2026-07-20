@@ -1,28 +1,33 @@
 import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
 
 # Load dataset
 df = pd.read_csv("data/sensor_data.csv")
 
-print("=" * 50)
-print("Dataset Shape")
-print(df.shape)
+# Create Label Encoder
+encoder = LabelEncoder()
 
-print("=" * 50)
-print("Column Names")
-print(df.columns)
+# Convert text labels into numbers
+df["AirQuality"] = encoder.fit_transform(df["AirQuality"])
 
-print("=" * 50)
-print("First 5 Rows")
+print("Encoded Dataset")
 print(df.head())
 
-print("=" * 50)
-print("Missing Values")
-print(df.isnull().sum())
+print("\nLabel Mapping")
+for index, label in enumerate(encoder.classes_):
+    print(f"{label} -> {index}")
+
+# Features (Input)
+X = df[["Temperature", "Humidity", "MQ7", "MQ136"]]
+
+# Target (Output)
+y = df["AirQuality"]
 
 print("=" * 50)
-print("Air Quality Count")
-print(df["AirQuality"].value_counts())
+print("Features (X)")
+print(X.head())
 
 print("=" * 50)
-print("Statistics")
-print(df.describe())
+print("Target (y)")
+print(y.head())
