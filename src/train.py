@@ -1,3 +1,4 @@
+import joblib
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
@@ -74,3 +75,12 @@ accuracy = accuracy_score(y_test, predictions)
 
 print("=" * 50)
 print(f"Model Accuracy: {accuracy * 100:.2f}%")
+
+# Save Model
+saved_path = joblib.dump(model, "model/model.pkl")
+
+print(saved_path)
+
+print("=" * 50)
+print("Model Saved Successfully!")
+print("Location: model/model.pkl")
