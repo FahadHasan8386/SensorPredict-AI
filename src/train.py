@@ -1,40 +1,15 @@
-import joblib
-import pandas as pd
-from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score
+import joblib
 
-# Load dataset
-df = pd.read_csv("data/sensor_data.csv")
+from preprocessing import load_and_preprocess_data
+from model_builder import build_model
+from evaluator import evaluate_model
 
-# Create Label Encoder
-encoder = LabelEncoder()
 
-# Convert text labels into numbers
-df["AirQuality"] = encoder.fit_transform(df["AirQuality"])
+# Load Dataset
+X, y, encoder = load_and_preprocess_data("data/sensor_data.csv")
 
-print("Encoded Dataset")
-print(df.head())
-
-print("\nLabel Mapping")
-for index, label in enumerate(encoder.classes_):
-    print(f"{label} -> {index}")
-
-# Features (Input)
-X = df[["Temperature", "Humidity", "MQ7", "MQ136"]]
-
-# Target (Output)
-y = df["AirQuality"]
-
-print("=" * 50)
-print("Features (X)")
-print(X.head())
-
-print("=" * 50)
-print("Target (y)")
-print(y.head())
-
+# Split Dataset
 X_train, X_test, y_train, y_test = train_test_split(
     X,
     y,
@@ -42,45 +17,28 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42
 )
 
-print("=" * 50)
-print("Training Data:", len(X_train))
+# Build Model
+model = build_model()
 
-print("Testing Data:", len(X_test))
-
-print("=" * 50)
-print("Training Decision Tree Model..")
-
-#Create Model
-model = DecisionTreeClassifier(random_state=42)
-
-
-# Train Model
+# Train
 model.fit(X_train, y_train)
 
-print("Model Training Completed Successfuly!")
+# Evaluate
+predictions, accuracy = evaluate_model(model, X_test, y_test)
 
 print("=" * 50)
-print("Making Decision")
+print("Model Accuracy:", f"{accuracy*100:.2f}%")
 
-predictions = model.predict(X_test)
-
-print("Predicted Values : ")
+print("=" * 50)
+print("Predictions")
 print(predictions)
 
-print("Actual Values :")
+print("=" * 50)
+print("Actual")
 print(y_test.values)
 
-
-accuracy = accuracy_score(y_test, predictions)
-
-print("=" * 50)
-print(f"Model Accuracy: {accuracy * 100:.2f}%")
-
 # Save Model
-saved_path = joblib.dump(model, "model/model.pkl")
-
-print(saved_path)
+joblib.dump(model, "model/model.pkl")
 
 print("=" * 50)
 print("Model Saved Successfully!")
-print("Location: model/model.pkl")
