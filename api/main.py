@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from api.schemas import PredictionRequest
+from api.responses import success_response
 
 import pandas as pd
 import joblib
@@ -43,6 +44,4 @@ def predict(data: PredictionRequest):
 
     prediction = model.predict(input_data)
 
-    return {
-        "prediction": labels[prediction[0]]
-    }
+    return success_response(labels[prediction[0]])
